@@ -4,8 +4,11 @@
 flycheck-package
 ===============
 
-This library provides a [flycheck][] checker for the metadata in
-Emacs Lisp files which are intended to be packages.
+This library provides a [flycheck][] checker for the metadata in Emacs
+Lisp files which are intended to be packages.  The checks are
+performed by the
+separate [package-lint](https://github.com/purcell/package-lint)
+library.
 
 Currently these checks are only activated if a `Package-Requires` or
 `Package-Version` header is present in the file, and checks center on
@@ -20,9 +23,9 @@ repository. The version of `flycheck-package` there will always be
 up-to-date. There are also packages in [MELPA Stable][melpa-stable], which
 track the [latest numbered tag][tags].
 
-If you insist on doing things the hard way, first ensure `flycheck` is
-installed, then download this code and add the directory to your Emacs
-`load-path`.
+If you insist on doing things the hard way, first ensure `flycheck`
+and `package-lint` are installed, then download this code and add the
+directory to your Emacs `load-path`.
 
 Then, in your `init.el`:
 
@@ -30,40 +33,6 @@ Then, in your `init.el`:
 (eval-after-load 'flycheck
   '(flycheck-package-setup))
 ```
-
-Roadmap
--------
-
-Once this is more useful, the plan is to extract the checks into a separate
-`package-lint.el`, which can then be used by this checker and also by
-MELPA -- this will probably be essential in order to check multi-file packages
-helpfully anyway.
-
-Additional checks for a future package-lint.el, some of which are currently
-performed by other flycheck checkers:
-
-- WARN: header line formatting / capitalisation
-- trailing line presence / formatting
-- URL header presence
-- URL header value is a single valid http(s) URL
-- WARN: library is called *-mode but doesn't provide a major mode
-- WARN: suggest cl-lib vs cl
-- non-use of standard keywords
-- checkdoc failures for interactive functions / defcustoms
-- presence of :group for each defcustom / defgroup
-- trailing whitespace?
-- themes which aren't in a matching *-theme.el file
-- files lacking a (provide ...) which matches their name
-- use of unsafe local variables
-- use of emacs version dependencies
-- local variable set in header line
-- use of nadvice.el without depending on Emacs 24.4
-- non-empty commentary
-- using commentary to talk about load[- ]path and installation
-- lack of autoloads
-- references to README files which won't be bundled in a package
-- dependencies on unavailable packages / versions
-- use of CamelCase identifiers
 
 License
 -------
