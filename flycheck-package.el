@@ -46,7 +46,8 @@
            (mapcar (lambda (x)
                      (apply #'flycheck-error-new-at `(,@x :checker ,checker)))
                    (condition-case err
-                       (package-lint-buffer (current-buffer))
+                       (when (package-lint-looks-like-a-package-p)
+                         (package-lint-buffer (current-buffer)))
                      (error
                       (funcall callback 'errored (error-message-string err))
                       (signal (car err) (cdr err)))))))
