@@ -5,7 +5,8 @@ flycheck-package
 ===============
 
 This library provides a [flycheck][] checker for the metadata in Emacs
-Lisp files which are intended to be packages.  The checks are
+Lisp files which are intended to be packages.  That metadata includes the
+package description, its dependencies and more.  The checks are
 performed by the
 separate [package-lint](https://github.com/purcell/package-lint)
 library.
