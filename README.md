@@ -31,7 +31,7 @@ directory to your Emacs `load-path`.
 
 Then, in your `init.el`:
 
-```lisp
+```elisp
 (eval-after-load 'flycheck
   '(flycheck-package-setup))
 ```
