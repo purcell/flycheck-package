@@ -43,14 +43,15 @@
   "Flycheck start function for CHECKER, invoking CALLBACK."
   (funcall callback
            'finished
-           (mapcar (lambda (x)
-                     (apply #'flycheck-error-new-at `(,@x :checker ,checker)))
-                   (condition-case err
-                       (when (package-lint-looks-like-a-package-p)
-                         (package-lint-buffer (current-buffer)))
-                     (error
-                      (funcall callback 'errored (error-message-string err))
-                      (signal (car err) (cdr err)))))))
+           (flycheck-increment-error-columns
+            (mapcar (lambda (x)
+                      (apply #'flycheck-error-new-at `(,@x :checker ,checker)))
+                    (condition-case err
+                        (when (package-lint-looks-like-a-package-p)
+                          (package-lint-buffer (current-buffer)))
+                      (error
+                       (funcall callback 'errored (error-message-string err))
+                       (signal (car err) (cdr err))))))))
 
 
 ;;; Checker definition
