@@ -67,8 +67,16 @@
 Add `flycheck-emacs-lisp-package' to `flycheck-checkers'."
   (interactive)
   (add-to-list 'flycheck-checkers 'emacs-lisp-package t)
-  (flycheck-add-next-checker 'emacs-lisp 'emacs-lisp-package t)
-  (flycheck-add-next-checker 'emacs-lisp-checkdoc 'emacs-lisp-package t))
+  (let ((visited '(emacs-lisp-package))
+        recurfn)
+    (setq recurfn
+          (lambda (elm)
+            (push elm visited)
+            (flycheck-add-next-checker elm 'emacs-lisp-package t)
+            (dolist (checker (flycheck-get-next-checkers elm))
+              (unless (memq checker visited)
+                (funcall recurfn checker)))))
+    (funcall recurfn 'emacs-lisp)))
 
 (provide 'flycheck-package)
 ;;; flycheck-package.el ends here
