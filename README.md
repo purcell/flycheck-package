@@ -13,9 +13,9 @@ performed by the
 separate [package-lint](https://github.com/purcell/package-lint)
 library.
 
-Currently these checks are only activated if a `Package-Requires` or
-`Package-Version` header is present in the file, and checks center on
-the validity of the data in that header.
+Currently the checker is only activated if a `;; Package-Requires:`,
+`;; Version:` or `;; Package-Version:` header is present in the current
+buffer.
 
 Installation
 ------------
